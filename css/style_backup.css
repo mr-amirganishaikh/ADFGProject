@@ -1,0 +1,209 @@
+@font-face {
+    font-family: 'avenirBook';
+    src: url('../fonts/AvenirLTStd-Book.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'avenirLight';
+    src: url('../fonts/AvenirLTStd-Light.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'avenirRoman';
+    src: url('../fonts/AvenirLTStd-Roman.otf') format('opentype');
+}
+
+body {
+    font-family: 'avenirLight';
+    background-color: #ffffff;
+}
+
+.login-page {
+    background-color: #f1f3f5;
+    margin-top: 60px;
+}
+
+.login-box .login-form,
+.login-box .login-appPop {
+    background-color: #ffffff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.16);
+}
+
+.login-box .login-form {
+    margin-top: 60px;
+    padding-top: 30px;
+}
+
+.login-box .login-form .form-section {
+    padding: 0 60px 30px;
+}
+
+.form-section form {
+    padding: 30px 0;
+}
+
+.login-box .login-form .login-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    color: #0871f4;
+    padding: 40px 0;
+    margin: 0;
+}
+
+.login-form label {
+    font-size: 14px;
+    letter-spacing: 1.3px;
+    color: #77909d;
+    margin: 7px 0 0;
+    vertical-align: middle;
+}
+
+.login-form .form-control {
+    border-radius: 6px;
+    border: solid 1px #d4d5d6;
+}
+
+.login-form .form-control:focus {
+    border-color: #0871f4;
+    box-shadow: none;
+}
+
+.login-form .status-icon {
+    width: 16px;
+    height: 17px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 24px;
+}
+
+.login-form .status-icon.username-icon {
+    background-image: url(../images/png/ok.png);
+}
+
+.login-form .status-icon.password-icon {
+    background-image: url(../images/png/password.png);
+}
+
+
+.login-form .form-actions {
+    text-align: center;
+    padding: 30px 0 0;
+}
+
+.login-form .form-actions .btn {
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
+    font-family: 'avenirRoman';
+    height: 40px;
+}
+
+.login-form .form-actions .btn-requestAc {
+    font-size: 14px;
+    line-height: 1.29;
+    color: #0871f4;
+    margin-right: 15px;
+}
+
+.login-form .form-actions .btn-login {
+    background-color: #0871f4;
+    color: #ffffff;
+}
+
+.form-actions .btn-icon {
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.form-actions .btn-requestAc .btn-icon {
+    background-image: url('../images/png/shape.png');
+    width: 18px;
+    height: 18px;
+    margin-left: 5px;
+    position: relative;
+    top: -5px;
+}
+
+.form-actions .btn-login .btn-icon {
+    background-image: url('../images/png/log-in.png');
+    width: 25px;
+    height: 25px;
+}
+
+.login-form .login-contact p {
+    font-size: 14px;
+    color: #77909d;
+}
+
+.login-form .login-contact p a {
+    font-weight: 900;
+    color: #0d57f1;
+}
+
+.login-appPop {
+    padding: 30px;
+}
+
+.login-appPop a {
+    display: inline-block;
+}
+
+.login-appPop a img {
+    width: 100%;
+}
+
+.login-appPop .appPop-logo,
+.login-appPop .appPop-downloads {
+    text-align: center;
+    padding: 15px;
+}
+
+.login-appPop .appPop-icon {
+    text-align: center;
+    padding: 30px;
+}
+
+
+.login-appPop .appPop-logo a,
+.login-appPop .appPop-downloads a {
+    width: 160px;
+    margin: 0 15px;
+}
+
+.login-appPop .appPop-icon a {
+    width: 260px;
+}
+
+.partners-table .logo-section{
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.partners-table .logo-section a{
+    display: block;
+    width: 120px;
+}
+
+.partners-table .logo-section a img{
+    width: 100%;
+}
+
+.partners-table .page-title{
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 2.8px;
+  color: #0871f4;
+}
+
+#partners-datatable thead th{
+    background-color: #efefef;
+}

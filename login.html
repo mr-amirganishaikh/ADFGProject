@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Log In</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <!--[if lt IE 9]> <script src=https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js></script> <script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script> <![endif]-->
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="login-page">
+    <div class="login-form">
+        <div class="login-logo">
+            <img src="images/png/stik-2.png" />
+        </div>
+        <form action="#" method="post">
+            <div class="form-group clearfix">
+                <div class="col-xs-4">
+                    <label>User Name</label>
+                </div>
+                <div class="col-xs-8">
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <div class="col-xs-4">
+                    <label>User Password</label>
+                </div>
+                <div class="col-xs-8">
+                    <input type="password" class="form-control" />
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-requestAc"><i class="btn-icon"></i> Request Account</button>
+                <button type="submit" class="btn btn-login"><i class="btn-icon"></i> Log In</button>
+            </div>
+        </form>
+        <div class="login-contact">
+            <p>Contact us <a href="#">here</a></p>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        function verticalMiddle(options){
+            var $parent = $(options.parent);
+            var $target = $(options.target);
+            
+            if(options.parent == 'window'){
+                var parentH = $parent.height();
+            }
+            else{
+                var parentH = $parent.outerHeight();
+            }
+            var targetH = $target.outerHeight();
+            
+            var gap = parentH - targetH;
+            var equalGap = gap / 2 +'px';
+            
+            $target.css({
+                "margin-top": equalGap,
+                "margin-bottom": equalGap
+            })
+            
+        }
+        
+        $(document).ready(function() {
+            verticalMiddle({
+                parent: window,
+                target: '.login-form'
+            });
+        });
+        
+        $(window).resize(function() {
+            verticalMiddle({
+                parent: window,
+                target: '.login-form'
+            });
+        });
+    </script>
+</body>
+</html>

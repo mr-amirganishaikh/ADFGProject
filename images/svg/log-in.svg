@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="33px" viewBox="0 0 32 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>105F6797-BC80-4574-A1C1-1D04D0BACE3B</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <filter x="-13.4%" y="-28.0%" width="126.7%" height="168.3%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="3" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Login-_-TRY" transform="translate(-719.000000, -662.000000)" fill="#FFFFFF">
+            <g id="Group" transform="translate(362.000000, 151.000000)">
+                <g id="Group-6" transform="translate(349.000000, 504.000000)">
+                    <g id="Group-18" filter="url(#filter-1)">
+                        <g id="Log-In" transform="translate(15.000000, 12.000000)">
+                            <g id="noun_86790_cc">
+                                <path d="M3.87435736,13.7932333 C5.14329556,15.0272444 6.85400273,15.7856333 8.73767181,15.7856333 C12.6491449,15.7856333 15.8197461,12.5233333 15.8197461,8.5 C15.8197461,4.4761 12.6489613,1.21417778 8.73767181,1.21417778 C6.82535935,1.21417778 5.09188438,1.99523333 3.81743783,3.26211111 L3,2.39208889 C4.48761935,0.912711111 6.51046585,0 8.7374882,0 C13.2932536,0 17,3.81328889 17,8.5 C17,13.1870889 13.2932536,17 8.7374882,17 C6.54278145,17 4.54674221,16.1137333 3.06591648,14.6727 L3.87435736,13.7932333 Z" id="Shape" fill-rule="nonzero"></path>
+                                <polygon id="Shape" fill-rule="nonzero" points="10.9947614 8.4996689 10.999612 8.49569565 8.0751389 6 7.19292707 6.75276472 8.61723256 7.96791603 0 7.96791603 0 9.03208397 8.61723256 9.03208397 7.19292707 10.2474008 8.0751389 11 11 8.5041388"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

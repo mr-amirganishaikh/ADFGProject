@@ -120,14 +120,64 @@
                 </li>
             </ul>
             <div class="col-xs-12 form-controls">
-                <button type="submit" class="btn btn-theme">Upload</button>
+                <button type="button" class="btn btn-theme" id="uploadBtn">Upload</button>
             </div>
         </div>
     </main>
+    <div class="popupDiv" id="successPopup">
+        <div class="popupContainer">
+            <div class="popupBody">
+                <img src="images/png/tick.png" class="img-icon" />
+                <span class="successMsg">Your content has been successfully uploaded</span>
+            </div>
+            <div class="popupControls">
+                <button type="button" class="btn" id="popupClose">Close</button>
+                <a href="upload.html" class="btn btn-theme" id="addAnother">Add Other Content</a>
+            </div>
+        </div>
+    </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js" integrity="sha256-8HGN1EdmKWVH4hU3Zr3FbTHoqsUcfteLZJnVmqD/rC8=" crossorigin="anonymous"></script>
     <script>
+        var popupControls = function (target) {
+            $(target).find("#popupClose").click(function() {
+                $(target).hide();
+            });
+        }
+        
+        var submitForm = function(){
+            // rest form submission code and on success display popup
+            $("#successPopup").show();
+            verticalMiddle({
+                parent: "#successPopup",
+                target: '#successPopup .popupContainer'
+            });
+            popupControls("#successPopup");
+        }
+        
+        function verticalMiddle(options){
+            var $parent = $(options.parent);
+            var $target = $(options.target);
+            
+            if(options.parent == 'window'){
+                var parentH = $parent.height();
+            }
+            else{
+                var parentH = $parent.outerHeight();
+            }
+            var targetH = $target.outerHeight();
+            
+            var gap = parentH - targetH;
+            var equalGap = gap / 2 +'px';
+            
+            $target.css({
+                "margin-top": equalGap,
+                "margin-bottom": equalGap
+            })
+            
+        }
+        
         $(document).ready(function() {
             $("input[name=environment]").iCheck({
                 radioClass: 'iradio_flat-green'
@@ -154,6 +204,8 @@
                 console.log(this.files[0]);
             	$("#thumbnailBtn").text(attachmentTitle);
             });
+            
+            $("#uploadBtn").on("click",submitForm);
         });
 
     </script>

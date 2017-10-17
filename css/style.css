@@ -137,25 +137,33 @@ body {
 
 
 
-.partners-table .logo-section {
+.partners-table .logo-section,
+.upload-page .logo-section {
     padding: 15px;
     margin-bottom: 15px;
 }
 
-.partners-table .logo-section a {
+.partners-table .logo-section a,
+.upload-page .logo-section a {
     display: block;
     width: 120px;
 }
 
-.partners-table .logo-section a img {
+.partners-table .logo-section a img,
+.upload-page .logo-section a img {
     width: 100%;
 }
 
-.partners-table .page-title {
+.partners-table .page-title,
+.upload-page .page-title {
     font-size: 24px;
     font-weight: 300;
     letter-spacing: 2.8px;
     color: #0871f4;
+}
+
+.upload-page .page-title {
+    text-align: center;
 }
 
 .partners-table .table-grid {
@@ -222,7 +230,7 @@ body {
     float: right;
 }
 
-.partners-table .table-controls .btn {
+.btn {
     border-radius: 4px;
     background-color: #ffffff;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
@@ -230,12 +238,20 @@ body {
     height: 34px;
 }
 
-.partners-table .table-controls .btn-theme {
+.btn-theme {
     background-color: #0871f4;
     color: #ffffff;
+    transition: all 0.35s;
 }
 
-.partners-table .table-controls .btn .btn-icon {
+.btn-theme:hover,
+.btn-theme:focus {
+    background-color: #065ecc;
+    color: #ffffff;
+    outline: none !important;
+}
+
+.btn .btn-icon {
     background-size: contain;
     background-repeat: no-repeat;
     vertical-align: middle;
@@ -243,6 +259,18 @@ body {
     margin-right: 5px;
     width: 13px;
     height: 13px;
+}
+
+.theme-control {
+    border-radius: 6px;
+    border: solid 1px #d4d5d6;
+    color: #77909d;
+    display: inline-block;
+}
+
+.theme-control:focus {
+    border-color: #0871f4;
+    box-shadow: none;
 }
 
 .partners-table .table-controls .btn-print .btn-icon {
@@ -257,17 +285,8 @@ body {
     background-image: url(../images/png/filter.png);
 }
 
-.partners-table .table-controls .theme-control {
-    border-radius: 6px;
-    border: solid 1px #d4d5d6;
-    color: #77909d;
-    display: inline-block;
+.partners-table .table-controls .filter-controls .theme-control {
     width: 160px;
-}
-
-.partners-table .table-controls .theme-control:focus {
-    border-color: #0871f4;
-    box-shadow: none;
 }
 
 .table-grid .dataTables_paginate {
@@ -339,4 +358,53 @@ body {
 
 .table-grid .dataTables_paginate .paginate_button.next:after {
     transform: rotate(180deg);
+}
+
+.upload-page .form-section .form-fields {
+    float: none;
+    margin: 30px auto;
+    padding: 0;
+}
+
+.upload-page .form-section .form-fields li {
+    width: 50%;
+    float: left;
+    margin-bottom: 30px;
+    padding-right: 30px;
+}
+
+.upload-page .form-section .form-fields li.fullWidth {
+    width: 100%;
+}
+
+.upload-page .form-section .field-group > label {
+    margin-right: 15px;
+    min-width: 120px;
+}
+
+.upload-page .form-section .field-group .btn-theme,
+.upload-page .form-section .field-group .theme-control {
+    width: calc(100% - 140px);
+}
+
+.upload-page .form-section .inputs-group {
+    display: inline-block;
+}
+
+.upload-page .form-section .field-group .btn-theme {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.upload-page .form-section .inputs-group > label {
+    margin: 0 30px 0 15px;
+}
+
+.upload-page .form-section .form-controls {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.btn-icon.icon-upload {
+    background-image: url(../images/png/download.png);
 }

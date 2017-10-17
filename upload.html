@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Upload</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <!--[if lt IE 9]> <script src=https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js></script> <script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script> <![endif]-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/flat/green.css" integrity="sha256-5zuyx5fuDf6aU3/8tSuuR31yFxkMHjsTq43zd5dpNnU=" crossorigin="anonymous" />
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <main class="container upload-page">
+        <div class="col-md-12 logo-section">
+            <a href="#">
+                <img src="images/png/stik-2.png" />
+            </a>
+        </div>
+        <div clas="col-md-12">
+            <h2 class="page-title">
+                Upload Content System
+            </h2>
+        </div>
+        <div class="form-section">
+            <ul class="col-xs-12 col-sm-8 form-fields list-inline clearfix">
+                <li>
+                    <div class="field-group">
+                        <label>Content</label>
+                        <button type="button" class="btn btn-theme" id="contentBtn"><i class="btn-icon icon-upload"></i> Choose File</button>
+                        <input type="file" class="hidden" name="content" id="contentField" />
+                    </div>
+                </li>
+                <li>
+                    <div class="field-group">
+                        <label>Thumbnail</label>
+                        <button type="button" class="btn btn-theme" id="thumbnailBtn"><i class="btn-icon icon-upload"></i> Choose File</button>
+                        <input type="file" class="hidden" name="thumbnail" id="thumbnailField" />
+                    </div>
+                </li>
+                <li>
+                    <div class="field-group">
+                        <label>Category</label>
+                        <select class="form-control theme-control">
+                            <option>Literacy</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="field-group">
+                        <label>Type</label>
+                        <select class="form-control theme-control">
+                            <option>Video</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="field-group">
+                        <label>Name (Arabic)</label>
+                        <input type="text" class="form-control theme-control" />
+                    </div>
+                </li>
+                <li>
+                    <div class="field-group">
+                        <label>Name (English)</label>
+                        <input type="text" class="form-control theme-control" />
+                    </div>
+                </li>
+                <li>
+                    <div class="field-group">
+                        <label>Provider</label>
+                        <select class="form-control theme-control">
+                            <option>Ibdaa</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="field-group">
+                        <label>Coin Fee</label>
+                        <input type="text" class="form-control theme-control" />
+                    </div>
+                </li>
+                <li>
+                    <div class="field-group">
+                        <label>Xp reward</label>
+                        <input type="text" class="form-control theme-control" />
+                    </div>
+                </li>
+                <li>
+                    <div class="field-group">
+                        <label>Coin reward</label>
+                        <input type="text" class="form-control theme-control" />
+                    </div>
+                </li>
+                <li class="fullWidth">
+                    <div class="field-group">
+                        <label>Keywords</label>
+                        <input type="text" class="form-control theme-control" />
+                    </div>
+                </li>
+                <li class="fullWidth">
+                    <div class="field-group">
+                        <label>Environment</label>
+                        <div class="inputs-group">
+                            <input type="radio" name="environment" value="dev" />
+                            <label>Dev</label>
+                        </div>
+                        <div class="inputs-group">
+                            <input type="radio" name="environment" value="staging" />
+                            <label>Staging</label>
+                        </div>
+                        <div class="inputs-group">
+                            <input type="radio" name="environment" value="prodaction" />
+                            <label>Prodaction</label>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="col-xs-12 form-controls">
+                <button type="submit" class="btn btn-theme">Upload</button>
+            </div>
+        </div>
+    </main>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js" integrity="sha256-8HGN1EdmKWVH4hU3Zr3FbTHoqsUcfteLZJnVmqD/rC8=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $("input[name=environment]").iCheck({
+                radioClass: 'iradio_flat-green'
+            });
+            
+            $("#contentBtn").click(function() {
+                $("#contentField").trigger("click");
+            });
+            
+            $("#thumbnailBtn").click(function() {
+                $("#thumbnailField").trigger("click");
+            });
+            
+            $("#contentField").change(function() {
+                var attachementFile = $(this).val();
+            	var attachmentTitle = this.files[0].name;
+                console.log(this.files[0]);
+            	$("#contentBtn").text(attachmentTitle);
+            });
+            
+            $("#thumbnailField").change(function() {
+                var attachementFile = $(this).val();
+            	var attachmentTitle = this.files[0].name;
+                console.log(this.files[0]);
+            	$("#thumbnailBtn").text(attachmentTitle);
+            });
+        });
+
+    </script>
+</body>
+
+
+</html>

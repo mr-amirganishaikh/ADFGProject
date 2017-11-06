@@ -25,19 +25,20 @@
                 <img src="images/png/swoo-logo.png" />
             </a>
         </div>
-        <h2 class="page-title">
+        <h2 class="col-xs-12 page-title">
             Publish Content System
+            <a class="clearfix" href="#">Logout</a>
         </h2>
         <div class="table-controls clearfix">
             <div class="exportDownload-controls">
                 <button type="button" class="btn btn-theme btn-print"><i class="btn-icon"></i> Print</button>
                 <button type="button" class="btn btn-theme btn-downloadFile"><i class="btn-icon"></i> Download File</button>
             </div>
-            <div class="filter-controls">
+            <!--<div class="filter-controls">
                 <input type="text" name="from" class="form-control theme-control" placeholder="from" />
                 <input type="text" name="to" class="form-control theme-control" placeholder="to" />
                 <button type="button" class="btn btn-theme btn-filter"><i class="btn-icon"></i>Filter</button>
-            </div>
+            </div>-->
         </div>
         <div class="table-grid">
             <table id="partners-datatable" class="table">
@@ -91,22 +92,35 @@
         </div>
     </div>
     <script src="js/jquery.min.js"></script>
-    <script src="js/roundNumber.js"></script>
     <script>
-        var authToken = "<?php echo $_GET['token']; ?>";
+        $.urlParam = function(name) {
+            var results = new RegExp('[\?&]' + name + '=([^]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            } else {
+                return results[1] || 0;
+            }
+        }
+        var authToken = $.urlParam('token');
         $.ajax({
             url: "https://abjadiyat-dev.ap-southeast-1.elasticbeanstalk.com/publisher/reports",
-            type: "GET",
+            type: "POST",
             dataType: 'json',
+            crossDomain: true,
             beforeSend: function(response) {
                 response.setRequestHeader("Authorisation", authToken);
             },
             data: authToken,
             success: function(dataResponse) {
                 if (dataResponse._statusCode === 200) {
+                    if (dataResponse._message == "NOT FOUND") {
+                        $(".alert-box").hide().fadeIn().find("span").html("No Data Received");
+                    }
                     initTableGrid(dataResponse._entity);
-                } else {
-                    $(".alert-box").fadeIn().find("span").html("Token Invalid");
+                } else if (response._statusCode === 401) {
+                    window.location.href = "login.html?tokenStatus=Expired";
+                } else if (response._statusCode === 500) {
+                    $(".alert-box").hide().fadeIn().find("span").html("Internal Server Error");
                 }
             }
         });
@@ -134,7 +148,6 @@
         }
 
         var initTableGrid = function(data) {
-            console.log(data);
             var count = 1;
             for (var i = 0; i <= data.length; i++) {
                 $("#partners-datatable .tableBody").append(
@@ -151,15 +164,6 @@
                     '</tr>');
                 count++;
             }
-        }
-
-        function disableBack() {
-            window.history.forward()
-        }
-
-        window.onload = disableBack();
-        window.onpageshow = function(evt) {
-            if (evt.persisted) disableBack()
         }
 
     </script>

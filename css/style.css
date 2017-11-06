@@ -139,7 +139,7 @@ body {
 
 .partners-table .logo-section,
 .upload-page .logo-section {
-    padding: 15px;
+    padding: 15px 0;
     margin-bottom: 15px;
 }
 
@@ -160,6 +160,17 @@ body {
     font-weight: 300;
     letter-spacing: 2.8px;
     color: #0871f4;
+    margin: 0;
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+.partners-table .page-title a {
+    float: right;
+    font-size: 14px;
+    display: inline-block;
+    letter-spacing: 1px;
+    line-height: 25px;
 }
 
 .upload-page .page-title {
@@ -466,6 +477,6 @@ body {
     display: none;
 }
 
-.alert-box .alert{
+.alert-box .alert {
     margin-bottom: 0;
 }

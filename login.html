@@ -44,9 +44,15 @@
         </div>
     </div>
     <div class="alert-box">
-        <div class="alert authAlert alert-danger alert-dismissable fade in">
+        <div class="alert alert-danger alert-dismissable fade in">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Alert! </strong><span></span>
+        </div>
+    </div>
+    <div class="alert-box success">
+        <div class="alert alert-success alert-dismissable fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success! </strong><span></span>
         </div>
     </div>
     <script src="js/jquery.min.js"></script>
@@ -90,7 +96,21 @@
                 target: '.login-form'
             });
         });
-
+        
+        $.urlParam = function(name) {
+            var results = new RegExp('[\?&]' + name + '=([^]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            } else {
+                return results[1] || 0;
+            }
+        }
+        var status = $.urlParam('status');
+        if(status == "Expired"){
+            $(".alert-box").hide().fadeIn().find("span").html("Please retry login");
+        }else if(status == "Logout"){
+            $(".alert-box.success").hide().fadeIn().delay(1000).fadeOut().find("span").html("Please retry login");
+        }
     </script>
     <script>
         $(document).ready(function() {
@@ -103,15 +123,17 @@
                     url: 'https://abjadiyat-dev.ap-southeast-1.elasticbeanstalk.com/auth',
                     type: 'POST',
                     dataType: 'json',
+                    crossDomain: true,
                     data: cred,
                     success: function(response) {
                         if (response._statusCode === 200) {
                             var authToken = response._entity;
-                            window.location.href = "partners.php?token="+authToken;
+                            window.location.href = "partners.html?token="+authToken;
                         } else if (response._statusCode === 401) {
-                            $(".alert-box").fadeIn().find("span").html("Invalid Credentials");
+                            $(".alert-box").hide().fadeIn().find("span").html("Invalid Credentials");
+                        } else if(response._statusCode === 500) {
+                            $(".alert-box").hide().fadeIn().find("span").html("Internal Server Error");
                         }
-
                     }
                 });
             });

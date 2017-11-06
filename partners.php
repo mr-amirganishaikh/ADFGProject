@@ -84,60 +84,83 @@
             </table>
         </div>
     </main>
+    <div class="alert-box">
+        <div class="alert authAlert alert-danger alert-dismissable fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Alert! </strong><span></span>
+        </div>
+    </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/roundNumber.js"></script>
     <script>
-        var drawTableGrid = function(values) {
-            var type = values.tdType,
-                typeValue,
-                uCount = values.tdUCount,
-                vCount = values.tdVCount,
-                cView = values.tdCView,
-                mValue = values.mannualValue;
-
-            if (type == 1) {
-                typeValue = "Video";
-            } else if (type == 2) {
-                typeValue = "E-Book";
-            } else if (type == 3) {
-                typeValue = "Game";
+        var authToken = "<?php echo $_GET['token']; ?>";
+        $.ajax({
+            url: "https://abjadiyat-dev.ap-southeast-1.elasticbeanstalk.com/publisher/reports",
+            type: "GET",
+            dataType: 'json',
+            beforeSend: function(response) {
+                response.setRequestHeader("Authorisation", authToken);
+            },
+            data: authToken,
+            success: function(dataResponse) {
+                if (dataResponse._statusCode === 200) {
+                    initTableGrid(dataResponse._entity);
+                } else {
+                    $(".alert-box").fadeIn().find("span").html("Token Invalid");
+                }
             }
-
-            var frequencyValue = roundNumber((vCount / uCount), 2);
-            var cRate = roundNumber(((cView / vCount) * 100), 2);
-            var earnings = roundNumber((uCount * mValue), 2);
-
-            $("#partners-datatable .tableBody").append(
-                '<tr>' +
-                '<td class="td-count">' + values.tdCount + '</td>' +
-                '<td class="td-name">' + values.tdName + '</td>' +
-                '<td class="td-type">' + typeValue + '</td>' +
-                '<td class="td-uCount">' + uCount + '</td>' +
-                '<td class="td-vCount">' + vCount + '</td>' +
-                '<td class="td-frequency">' + frequencyValue + '</td>' +
-                '<td class="td-cView">' + cView + '</td>' +
-                '<td class="td-cRate">' + cRate + '%</td>' +
-                '<td class="td-earnings">$' + earnings + '</td>' +
-                '</tr>');
-        }
-
-        var initTableGrid = function() {
-            for (var i = 1; i <= 300; i++) {
-                drawTableGrid({
-                    "tdCount": i,
-                    "tdName": "Adjadiyad",
-                    "tdType": 2,
-                    "tdUCount": 50 + i,
-                    "tdVCount": 420 + i,
-                    "tdCView": 320 + i,
-                    "mannualValue": 40
-                });
-            }
-        }
-
-        $(document).ready(function() {
-            initTableGrid();
         });
+
+        var typeValue = function(data) {
+            if (data === 1) {
+                return "ABJ";
+            } else if (data === 2) {
+                return "Video";
+            } else if (data === 3) {
+                return "E-Book";
+            } else if (data === 4) {
+                return "Game";
+            } else if (data === 5) {
+                return "Video";
+            } else if (data === 6) {
+                return "E-Book";
+            } else if (data === 7) {
+                return "7";
+            } else if (data === 8) {
+                return "PRG";
+            } else if (data === 9) {
+                return "PRA";
+            }
+        }
+
+        var initTableGrid = function(data) {
+            console.log(data);
+            var count = 1;
+            for (var i = 0; i <= data.length; i++) {
+                $("#partners-datatable .tableBody").append(
+                    '<tr>' +
+                    '<td class="td-count">' + count + '</td>' +
+                    '<td class="td-name">' + data[i].contentId + '</td>' +
+                    '<td class="td-type">' + typeValue(data[i].contentType) + '</td>' +
+                    '<td class="td-uCount">' + data[i].unlockCount + '</td>' +
+                    '<td class="td-vCount">' + data[i].playCount + '</td>' +
+                    '<td class="td-frequency">' + data[i].frequency + '</td>' +
+                    '<td class="td-cView">' + data[i].completedView + '</td>' +
+                    '<td class="td-cRate">' + data[i].completionRate + '%</td>' +
+                    '<td class="td-earnings">$' + data[i].earnings + '</td>' +
+                    '</tr>');
+                count++;
+            }
+        }
+
+        function disableBack() {
+            window.history.forward()
+        }
+
+        window.onload = disableBack();
+        window.onpageshow = function(evt) {
+            if (evt.persisted) disableBack()
+        }
 
     </script>
     <script src="js/bootstrap.min.js"></script>
@@ -151,8 +174,11 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
     <script>
+        /*<![CDATA[*/
         $(document).ready(function() {
             var table = $('#partners-datatable').DataTable({
+                "processing": true,
+                "deferRender": true,
                 "dom": 'Bfrtip',
                 "searching": false,
                 "lengthChange": false,
@@ -165,7 +191,7 @@
                     "targets": 'no-sort',
                     "orderable": false,
                 }],
-                "pageLength": 50
+                "pageLength": 15
             });
 
             var tableControlsW = $(".partners-table").width() - $(".dataTables_paginate").width();
@@ -184,6 +210,7 @@
             $(".btn-downloadFile").on("click", function() {
                 table.button('.buttons-excel').trigger();
             });
+            /*]]>*/
         });
 
     </script>

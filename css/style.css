@@ -448,11 +448,24 @@ body {
     color: #00d81c;
 }
 
-.popupDiv .popupContainer .popupControls{
+.popupDiv .popupContainer .popupControls {
     padding: 30px 0;
     text-align: center;
 }
 
-.popupDiv .popupContainer .popupControls .btn{
+.popupDiv .popupContainer .popupControls .btn {
     margin: 0 5px;
+}
+
+.alert-box {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    max-width: 300px;
+    height: auto;
+    display: none;
+}
+
+.alert-box .alert{
+    margin-bottom: 0;
 }

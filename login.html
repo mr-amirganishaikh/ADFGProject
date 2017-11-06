@@ -17,13 +17,13 @@
         <div class="login-logo">
             <img src="images/png/stik-2.png" />
         </div>
-        <form action="#" method="post">
+        <form id="loginForm" action="#" method="post">
             <div class="form-group clearfix">
                 <div class="col-xs-4">
                     <label>User Name</label>
                 </div>
                 <div class="col-xs-8">
-                    <input type="text" class="form-control" />
+                    <input type="text" class="form-control" name="username" id="username" required />
                 </div>
             </div>
             <div class="form-group clearfix">
@@ -31,56 +31,93 @@
                     <label>User Password</label>
                 </div>
                 <div class="col-xs-8">
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" name="password" id="password" required />
                 </div>
             </div>
             <div class="form-actions">
                 <button type="button" class="btn btn-requestAc"><i class="btn-icon"></i> Request Account</button>
-                <button type="submit" class="btn btn-login"><i class="btn-icon"></i> Log In</button>
+                <button type="submit" class="btn btn-login" id="loginAuth"><i class="btn-icon"></i> Log In</button>
             </div>
         </form>
         <div class="login-contact">
             <p>Contact us <a href="#">here</a></p>
         </div>
     </div>
+    <div class="alert-box">
+        <div class="alert authAlert alert-danger alert-dismissable fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Alert! </strong><span></span>
+        </div>
+    </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
-        function verticalMiddle(options){
+        function verticalMiddle(options) {
             var $parent = $(options.parent);
             var $target = $(options.target);
-            
-            if(options.parent == 'window'){
+
+            if (options.parent == 'window') {
                 var parentH = $parent.height();
-            }
-            else{
+            } else {
                 var parentH = $parent.outerHeight();
             }
             var targetH = $target.outerHeight();
-            
+
             var gap = parentH - targetH;
-            var equalGap = gap / 2 +'px';
-            
+            var equalGap = gap / 2 + 'px';
+
             $target.css({
                 "margin-top": equalGap,
                 "margin-bottom": equalGap
             })
-            
+
         }
-        
+
         $(document).ready(function() {
             verticalMiddle({
                 parent: window,
                 target: '.login-form'
             });
+
+            $(".close").click(function() {
+                location.reload();
+            });
         });
-        
+
         $(window).resize(function() {
             verticalMiddle({
                 parent: window,
                 target: '.login-form'
             });
         });
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#loginForm").submit(function(event) {
+                event.preventDefault();
+                var cred = new Object();
+                cred.username = $('#username').val();
+                cred.password = $('#password').val();
+                $.ajax({
+                    url: 'https://abjadiyat-dev.ap-southeast-1.elasticbeanstalk.com/auth',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: cred,
+                    success: function(response) {
+                        if (response._statusCode === 200) {
+                            var authToken = response._entity;
+                            window.location.href = "partners.php?token="+authToken;
+                        } else if (response._statusCode === 401) {
+                            $(".alert-box").fadeIn().find("span").html("Invalid Credentials");
+                        }
+
+                    }
+                });
+            });
+        });
+
     </script>
 </body>
+
 </html>

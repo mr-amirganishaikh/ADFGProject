@@ -254,10 +254,10 @@
             $(".theme-control").val("");
 
             $(".btn-print").on("click", function() {
-                table.button('.buttons-print').trigger();
+                $('#partners-datatable').DataTable().button('.buttons-print').trigger();
             });
             $(".btn-downloadFile").on("click", function() {
-                table.button('.buttons-excel').trigger();
+                $('#partners-datatable').DataTable().button('.buttons-excel').trigger();
             });
 
             $("#logout").click(function(evt) {

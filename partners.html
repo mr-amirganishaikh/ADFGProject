@@ -18,10 +18,10 @@
 <body>
     <main class="container partners-table">
         <div class="col-xs-12 logo-section clearfix">
-            <a href="#" class="pull-left">
+            <a href="javascript:void()" class="pull-left">
                 <img src="images/png/stik-2.png" />
             </a>
-            <a href="#" class="pull-right">
+            <a href="javascript:void()" class="pull-right">
                 <img id="partnerLogo" />
             </a>
         </div>
@@ -165,6 +165,13 @@
                 },
                 complete: function(response) {
                     table();
+                },
+                error: function(response) {
+                    if (response.status === 401) {
+                        window.location.href = "login.html?status=Expired";
+                    } else if (response.status === 500) {
+                        window.location.href = "login.html?status=serverError";
+                    }
                 }
             });
         });

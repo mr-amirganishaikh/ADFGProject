@@ -147,6 +147,7 @@ body {
 .upload-page .logo-section a {
     display: block;
     width: 120px;
+    cursor: default;
 }
 
 .partners-table .logo-section a img,

@@ -43,16 +43,9 @@
             <p>Contact us <a href="#">here</a></p>
         </div>
     </div>
-    <div class="alert-box">
-        <div class="alert alert-danger alert-dismissable fade in">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Alert! </strong><span></span>
-        </div>
-    </div>
-    <div class="alert-box success">
-        <div class="alert alert-success alert-dismissable fade in">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success! </strong><span></span>
+    <div class="alert-box center">
+        <div class="alert fade in">
+            <strong></strong><span></span>
         </div>
     </div>
     <script src="js/jquery.min.js"></script>
@@ -84,10 +77,6 @@
                 parent: window,
                 target: '.login-form'
             });
-
-            $(".close").click(function() {
-                location.reload();
-            });
         });
 
         $(window).resize(function() {
@@ -105,12 +94,25 @@
                 return results[1] || 0;
             }
         }
+        
+        var errorPopup = function(type, msg){
+            if(type == "alert"){
+                $(".alert-box").find(".alert").addClass("alert-danger").removeClass("alert-warning alert-success").find("strong").text("Alert ! ");
+            }else if(type == "success"){
+                $(".alert-box").find(".alert").addClass("alert-success").removeClass("alert-warning alert-danger").find("strong").text("Success ! ");
+            }else if(type == "warning"){
+                $(".alert-box").find(".alert").addClass("alert-warning").removeClass("alert-success alert-danger").find("strong").text("Warning ! ");
+            }
+            $(".alert-box").hide().fadeIn().delay(1500).fadeOut().find("span").text(msg);
+        }
+        
         var status = $.urlParam('status');
         if(status == "Expired"){
-            $(".alert-box").hide().fadeIn().find("span").html("Please retry login");
+            errorPopup("alert","Please retry login");
         }else if(status == "Logout"){
-            $(".alert-box.success").hide().fadeIn().delay(1000).fadeOut().find("span").html("Please retry login");
+            errorPopup("success","Logged out successful");
         }
+        
     </script>
     <script>
         $(document).ready(function() {
@@ -130,9 +132,9 @@
                             var authToken = response._entity;
                             window.location.href = "partners.html?token="+authToken;
                         } else if (response._statusCode === 401) {
-                            $(".alert-box").hide().fadeIn().find("span").html("Invalid Credentials");
+                            errorPopup("alert", "Invalid Credentials");                            
                         } else if(response._statusCode === 500) {
-                            $(".alert-box").hide().fadeIn().find("span").html("Internal Server Error");
+                            errorPopup("alert", "Internal Server Error");
                         }
                     }
                 });

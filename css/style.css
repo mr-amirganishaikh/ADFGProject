@@ -472,9 +472,13 @@ body {
     position: fixed;
     top: 15px;
     right: 15px;
-    max-width: 300px;
+    width: 300px;
     height: auto;
     display: none;
+}
+
+.alert-box.center{
+    right: calc(50% - 150px);
 }
 
 .alert-box .alert {

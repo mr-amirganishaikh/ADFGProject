@@ -11,7 +11,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <!--[if lt IE 9]> <script src=https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js></script> <script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script> <![endif]-->
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />-->
     <link href="css/style.css" rel="stylesheet" />
 </head>
 
@@ -67,32 +67,43 @@
                         <td></td>
                         <td>8</td>
                         <td></td>
-                        <td>45%</td>
+                        <td class="avgCRate"></td>
                         <td></td>
                     </tr>
                     <tr id="total-row">
                         <td>Total</td>
                         <td></td>
                         <td></td>
-                        <td>50</td>
-                        <td>300</td>
+                        <td class="totalUCount"></td>
+                        <td class="totalVCount"></td>
                         <td></td>
-                        <td>1400</td>
+                        <td class="totalCView"></td>
                         <td></td>
-                        <td>250</td>
+                        <td class="totalEarnings"></td>
                     </tr>
                 </tfoot>
             </table>
         </div>
     </main>
     <div class="alert-box">
-        <div class="alert authAlert alert-danger alert-dismissable fade in">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Alert! </strong><span></span>
+        <div class="alert fade in">
+            <strong></strong><span></span>
         </div>
     </div>
     <script src="js/jquery.min.js"></script>
+    <script src="js/roundNumber.js"></script>
     <script>
+        var errorPopup = function(type, msg) {
+            if (type == "alert") {
+                $(".alert-box").find(".alert").addClass("alert-danger").removeClass("alert-warning alert-success").find("strong").text("Alert ! ");
+            } else if (type == "success") {
+                $(".alert-box").find(".alert").addClass("alert-success").removeClass("alert-warning alert-danger").find("strong").text("Success ! ");
+            } else if (type == "warning") {
+                $(".alert-box").find(".alert").addClass("alert-warning").removeClass("alert-success alert-danger").find("strong").text("Warning ! ");
+            }
+            $(".alert-box").hide().fadeIn().delay(1500).fadeOut().find("span").text(msg);
+        }
+
         $.urlParam = function(name) {
             var results = new RegExp('[\?&]' + name + '=([^]*)').exec(window.location.href);
             if (results == null) {
@@ -102,27 +113,27 @@
             }
         }
         var authToken = $.urlParam('token');
-        $.ajax({
-            url: "https://abjadiyat-dev.ap-southeast-1.elasticbeanstalk.com/publisher/reports/",
-            type: "POST",
-            dataType: 'json',
-            crossDomain: true,
-            beforeSend: function(response) {
-                response.setRequestHeader("Authorisation", authToken);
-            },
-            data: authToken,
-            success: function(dataResponse) {
-                if (dataResponse._statusCode === 200) {
-                    if (dataResponse._message == "NOT FOUND") {
-                        $(".alert-box").hide().fadeIn().find("span").html("No Data Received");
+        $(document).ready(function() {
+            $.ajax({
+                url: "https://abjadiyat-dev.ap-southeast-1.elasticbeanstalk.com/publisher/reports/",
+                type: "POST",
+                dataType: 'json',
+                beforeSend: function(response) {
+                    response.setRequestHeader("Authorisation", authToken);
+                },
+                success: function(dataResponse) {
+                    if (dataResponse._statusCode === 200) {
+                        if (dataResponse._message == "NOT FOUND") {
+                            errorPopup("alert", "No data received");
+                        }
+                        initTableGrid(dataResponse._entity);
+                    } else if (dataResponse._statusCode === 401) {
+                        window.location.href = "login.html?tokenStatus=Expired";
+                    } else if (dataResponse._statusCode === 500) {
+                        errorPopup("alert", "Internal Server Error");
                     }
-                    initTableGrid(dataResponse._entity);
-                } else if (response._statusCode === 401) {
-                    window.location.href = "login.html?tokenStatus=Expired";
-                } else if (response._statusCode === 500) {
-                    $(".alert-box").hide().fadeIn().find("span").html("Internal Server Error");
                 }
-            }
+            });
         });
 
         var typeValue = function(data) {
@@ -147,23 +158,52 @@
             }
         }
 
+        var checkNull = function(data) {
+            if (data === null) {
+                return 0;
+            } else {
+                return data;
+            }
+        }
+
         var initTableGrid = function(data) {
-            var count = 1;
-            for (var i = 0; i <= data.length; i++) {
+            var count = 1,
+                totalUCount = 0,
+                totalVCount = 0,
+                totalCView = 0,
+                totalEarnings = 0,
+                totalCRate = 0,
+                avgCRate = 0;
+
+            for (var i = 0; i < data.length; i++) {
                 $("#partners-datatable .tableBody").append(
                     '<tr>' +
                     '<td class="td-count">' + count + '</td>' +
                     '<td class="td-name">' + data[i].contentId + '</td>' +
                     '<td class="td-type">' + typeValue(data[i].contentType) + '</td>' +
-                    '<td class="td-uCount">' + data[i].unlockCount + '</td>' +
-                    '<td class="td-vCount">' + data[i].playCount + '</td>' +
-                    '<td class="td-frequency">' + data[i].frequency + '</td>' +
-                    '<td class="td-cView">' + data[i].completedView + '</td>' +
-                    '<td class="td-cRate">' + data[i].completionRate + '%</td>' +
-                    '<td class="td-earnings">$' + data[i].earnings + '</td>' +
+                    '<td class="td-uCount">' + checkNull(data[i].unlockCount) + '</td>' +
+                    '<td class="td-vCount">' + checkNull(data[i].playCount) + '</td>' +
+                    '<td class="td-frequency">' + checkNull(data[i].frequency) + '</td>' +
+                    '<td class="td-cView">' + checkNull(data[i].completedView) + '</td>' +
+                    '<td class="td-cRate">' + checkNull(data[i].completionRate) + ' %</td>' +
+                    '<td class="td-earnings">$ ' + checkNull(data[i].earnings) + '</td>' +
                     '</tr>');
                 count++;
             }
+
+            for (var i = 0; i < data.length; i++) {
+                totalUCount = totalUCount + checkNull(data[i].unlockCount);
+                totalVCount = totalVCount + checkNull(data[i].playCount);
+                totalCView = totalCView + checkNull(data[i].completedView);
+                totalEarnings = totalEarnings + checkNull(data[i].earnings);
+                totalCRate = totalCRate + checkNull(data[i].completionRate);
+            }
+
+            $("#partners-datatable tfoot .totalUCount").text(totalUCount);
+            $("#partners-datatable tfoot .totalVCount").text(totalVCount);
+            $("#partners-datatable tfoot .totalCView").text(totalCView);
+            $("#partners-datatable tfoot .totalEarnings").text("$ " + totalEarnings);
+            $("#partners-datatable tfoot .avgCRate").text(roundNumber((totalCRate / data.length), 2) + " %");
         }
 
     </script>
@@ -174,37 +214,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <!--<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>-->
 
     <script>
-        /*<![CDATA[*/
         $(document).ready(function() {
-            var table = $('#partners-datatable').DataTable({
-                "processing": true,
-                "deferRender": true,
-                "dom": 'Bfrtip',
-                "searching": false,
-                "lengthChange": false,
-                "info": false,
-                "buttons": [
-                    'print', 'excel'
-                ],
-                "order": [],
-                "columnDefs": [{
-                    "targets": 'no-sort',
-                    "orderable": false,
-                }],
-                "pageLength": 15
+            $(window).load(function() {
+                var table = $('#partners-datatable').DataTable({
+                    "processing": true,
+                    "deferRender": true,
+                    "dom": 'Bfrtip',
+                    "searching": false,
+                    "lengthChange": false,
+                    "info": false,
+                    "buttons": [
+                        'print', 'excel'
+                    ],
+                    "order": [],
+                    "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false,
+                    }],
+                    "pageLength": 15
+                });
             });
 
             var tableControlsW = $(".partners-table").width() - $(".dataTables_paginate").width();
             $(".table-controls").css("width", tableControlsW);
 
-            $(".theme-control").daterangepicker({
+            /*$(".theme-control").daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true
-            });
+            });*/
 
             $(".theme-control").val("");
 
@@ -214,7 +255,6 @@
             $(".btn-downloadFile").on("click", function() {
                 table.button('.buttons-excel').trigger();
             });
-            /*]]>*/
         });
 
     </script>
